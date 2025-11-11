@@ -1,38 +1,14 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 13.05.2025 12:26:27
-// Design Name: 
-// Module Name: dff
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
-module dff #(parameter WIDTH = 1)(
-
-    output reg [WIDTH-1:0] q,
-    input wire [WIDTH-1:0] d,
-    input wire en,
-    input wire rst,
-    input wire clk
+module ff #(parameter WIDTH = 1)(
+  input logic clk,
+  input logic arst_n,
+  input logic [WIDTH-1:0] d,
+  output logic [WIDTH-1:0] q
 );
 
-    always @(posedge clk)
-       if(rst == 1'b1)
-          q <= 'b0;
-       else 
-          q <= d;
-        
+  always_ff @(posedge clk or negedge arst_n)
+    if(!arst_n)
+      q <= {WIDTH{1'b0}};
+    else 
+      q <= d;
+
 endmodule
